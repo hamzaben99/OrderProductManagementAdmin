@@ -1,0 +1,131 @@
+<h1 mat-dialog-title>Order details</h1>
+<div mat-dialog-content class="dialog-content-container">
+  <div class="dialog-content-item">
+    <mat-card appearance="outlined" class="dialog-item-card">
+      <mat-card-header>
+        <mat-card-title>Customer Infos</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item>
+            <span matListItemTitle>Last name:</span>
+            <span matListItemLine>{{ order.client.lastName }}</span>
+          </mat-list-item>
+          <mat-list-item>
+            <span matListItemTitle>First name:</span>
+            <span matListItemLine>{{ order.client.firstName }}</span>
+          </mat-list-item>
+          <mat-list-item>
+            <span matListItemTitle>Phone number:</span>
+            <span matListItemLine>{{ order.client.phoneNumber }}</span>
+          </mat-list-item>
+          <mat-list-item>
+            <span matListItemTitle>Email address:</span>
+            <span matListItemLine>{{ order.client.emailAddress }}</span>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="dialog-content-item">
+    <mat-card appearance="outlined" class="dialog-item-card">
+      <mat-card-header>
+        <mat-card-title> Order Infos </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item>
+            <span matListItemTitle>Order No.:</span>
+            <span matListItemLine>{{ order.id }}</span>
+          </mat-list-item>
+          <mat-list-item>
+            <span matListItemTitle>Order date:</span>
+            <span matListItemLine>{{ order.orderDate | date : "medium" }}</span>
+          </mat-list-item>
+          <mat-list-item>
+            <span matListItemTitle>Deliver at:</span>
+            <span matListItemLine>{{
+              order.orderDeliveryDate | date : "mediumDate"
+            }}</span>
+          </mat-list-item>
+          <mat-list-item>
+            <span matListItemTitle>Deliver to:</span>
+            <span matListItemLine>{{
+              order.orderDeliveryAddress ? order.orderDeliveryAddress : "N/A"
+            }}</span>
+          </mat-list-item>
+          <mat-list-item>
+            <span matListItemTitle>Status:</span>
+            <span
+              matListItemLine
+              [ngClass]="{'approved': order.validated, 'not-approved': !order.validated, 'canceled': false}"
+              >{{ order.validated ? "Validated" : "Not validated" }}</span
+            >
+            <!-- todo: change order validation to approval -->
+          </mat-list-item>
+          <mat-list-item>
+            <span matListItemTitle>Pre-order:</span>
+            <span matListItemLine>{{ order.preorder ? "yes" : "no" }}</span>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="dialog-content-item">
+    <mat-card appearance="outlined" class="dialog-item-card">
+      <mat-card-header>
+        <mat-card-title> Products Infos </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-nav-list>
+          <a
+            mat-list-item
+            *ngFor="let p of order.products"
+            href="/products/{{ p.productId }}"
+            target="_blank"
+          >
+            <div matListItemTitle>{{ p.product.name }}</div>
+            <div matListItemLine>Quantity : {{ p.quantity }}</div>
+            <div matListItemLine>Price : {{ p.product.unitPrice * p.quantity}} DH</div>
+          </a>
+          <a mat-list-item class="total-products-item">
+            <div matListItemTitle>Total</div>
+            <div matListItemLine>Quantity : {{ totalQuantity() }}</div>
+            <div matListItemLine>Price : {{ totalPrice() }} DH</div>
+          </a>
+        </mat-nav-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<mat-divider></mat-divider>
+<div mat-dialog-actions class="action-buttons-container">
+  <button
+    mat-icon-button
+    matTooltip="validate"
+    color="primary"
+    (click)="onValidateOrder()"
+    [disabled]="order.validated"
+  >
+    <mat-icon class="material-symbols-outlined">library_add_check</mat-icon>
+  </button>
+  <button
+    mat-icon-button
+    matTooltip="Edit"
+    color="primary"
+    (click)="onEditOrder()"
+  >
+    <mat-icon class="material-symbols-outlined">edit</mat-icon>
+  </button>
+  <button
+    mat-icon-button
+    matTooltip="Delete"
+    color="warn"
+    (click)="onDeleteOrder()"
+  >
+    <mat-icon class="material-symbols-outlined">delete</mat-icon>
+  </button>
+  <button mat-icon-button matTooltip="Close" color="warn" mat-dialog-close>
+    <mat-icon class="material-symbols-outlined">close</mat-icon>
+  </button>
+</div>

@@ -1,0 +1,54 @@
+<div class="page-container">
+  <mat-toolbar class="toolbar" color="primary">
+    <div class="menu-button">
+       <button matTooltip="menu" mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon class="material-symbols-outlined">menu</mat-icon>
+      </button>
+    </div>
+      <!-- <button matTooltip="home" mat-icon-button routerLink="/home">
+        <mat-icon class="material-symbols-outlined">home</mat-icon>
+      </button>
+    </div> -->
+    <a class="image-container" routerLink="/dashboard">
+      <img src="assets/logo.png" alt="La Bel'Dia Logo" class="toolbar-image">
+      <span>La Bel'Dia</span>
+    </a>
+    <div>
+      <button matTooltip="Manage account" mat-icon-button routerLink="/manage-account">
+        <mat-icon class="material-symbols-outlined">manage_accounts</mat-icon>
+      </button>
+      <button matTooltip="Logout" mat-icon-button (click)="onLogout()">
+        <mat-icon class="material-symbols-outlined">logout</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+  <mat-sidenav-container class="sidenav-container" autosize>
+    <mat-sidenav #sidenav class="sidenav" mode="over">
+      <mat-nav-list class="nav-list">
+        <mat-list-item routerLink="/dashboard" routerLinkActive="active" (click)="onNavigating()">
+          <mat-icon matListItemIcon class="material-symbols-outlined">dashboard</mat-icon>
+          <div matListItemTitle>Dashboard</div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item routerLink="/orders" routerLinkActive="active" (click)="onNavigating()">
+            <mat-icon matListItemIcon class="material-symbols-outlined">local_grocery_store</mat-icon>
+            <div matListItemTitle>Orders</div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item routerLink="/products" routerLinkActive="active" (click)="onNavigating()">
+            <mat-icon matListItemIcon class="material-symbols-outlined">fastfood</mat-icon>
+            <div matListItemTitle>Products</div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item routerLink="/settings" routerLinkActive="active" (click)="onNavigating()">
+            <mat-icon matListItemIcon class="material-symbols-outlined">settings</mat-icon>
+            <div matListItemTitle>Settings</div>
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="sidenav-content">
+      <ng-content></ng-content>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

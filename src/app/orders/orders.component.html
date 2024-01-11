@@ -1,0 +1,37 @@
+<h1>Orders</h1>
+<div class="content">
+  <p>
+    Here is displayed all the orders you have received, you can delete them, edit them, or change their status.
+  </p>
+  <mat-divider></mat-divider>
+  <div class="actions">
+    <mat-form-field class="action-selection">
+      <mat-label> Display Mode </mat-label>
+      <mat-select [(value)]="displayMode">
+        <mat-option value="all"> All Orders </mat-option>
+        <mat-option value="preorder"> Pre-Orders Only </mat-option>
+        <mat-option value="normal"> No Pre-Orders </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="action-buttons">
+      <button
+        class="button-item"
+        mat-mini-fab
+        color="primary"
+        (click)="onRefresh()"
+      >
+        <mat-icon class="material-symbols-outlined">refresh</mat-icon>
+      </button>
+      <button
+        class="button-item"
+        mat-raised-button
+        color="accent"
+        (click)="onAddOrder()"
+      >
+        Add order
+      </button>
+    </div>
+  </div>
+  <app-orders-table [mode]="displayMode"></app-orders-table>
+</div>
+<router-outlet></router-outlet>

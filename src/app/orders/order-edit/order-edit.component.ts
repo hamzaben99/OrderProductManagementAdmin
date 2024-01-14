@@ -5,8 +5,6 @@ import { OrderService } from '../order.service';
 import { Order } from '../../models/order.model';
 import { SNACK_BAR_DURATION } from '../../shared/constants';
 import { Product } from '../../models/product.model';
-import { ProductsService } from '../../products/products.service';
-import { Subscription } from 'rxjs';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -21,8 +19,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     productId: null,
     quantity: 1,
   };
-  productsSubscription: Subscription;
-  products: Product[] = [];
+  products: Product[];
   isEditMode = false;
   isPreorder = false;
   minDate = new Date();
@@ -30,11 +27,10 @@ export class OrderEditComponent implements OnInit, OnDestroy {
 
   constructor(
     private orderService: OrderService,
-    private productService: ProductsService,
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
     private dialogRef: MatDialogRef<OrderEditComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: { id: number; isEditMode: boolean }
+    @Inject(MAT_DIALOG_DATA) private data: { order: Order; products: Product[] }
   ) {
     this.initForm();
   }
@@ -44,40 +40,22 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.isEditMode = this.data.isEditMode;
-    this.productsSubscription = this.productService.productsChanged.subscribe(
-      (products) => (this.products = products)
-    );
-    this.products = this.productService.products;
+    this.products = this.data.products;
+    this.order = this.data.order;
 
-    if (this.isEditMode) {
-      this.orderService.fetchOrderById(this.data.id).subscribe({
-        next: (order) => {
-          this.order = order;
-          this.isPreorder = order.preorder;
+    if (this.order) {
+      this.isPreorder = this.order.preorder;
 
-          this.orderForm.patchValue(this.order);
-          this.order.products.forEach((product, index) =>
-            (<FormArray>this.orderForm.get('products')).push(
-              this.formBuilder.group({
-                productId: [product.productId, [Validators.required]],
-                quantity: [product.quantity, this.getQuantityValidators(index)],
-              })
-            )
-          );
-        },
-        error: (err) => {
-          this.snackBar.open(
-            `Failed to fetch order No. ${this.data.id}: ${err.message}`,
-            'dismiss',
-            {
-              duration: SNACK_BAR_DURATION,
-              panelClass: 'fail',
-            }
-          );
-          this.dialogRef.close();
-        },
-      });
+      this.orderForm.patchValue(this.order);
+      this.order.products.forEach((product, index) =>
+        (<FormArray>this.orderForm.get('products')).push(
+          this.formBuilder.group({
+            productId: [product.productId, [Validators.required]],
+            quantity: [product.quantity, this.getQuantityValidators(index)],
+          })
+        )
+      );
+      this.order = this.data.order;
     }
 
     this.dialogRef // todo: review this after adding Guards
@@ -85,9 +63,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       .subscribe(() => this.onCloseClicked());
   }
 
-  ngOnDestroy(): void {
-    this.productsSubscription.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 
   onPreorderSlideToggleChange(changes: MatSlideToggleChange) {
     this.isPreorder = changes.checked;

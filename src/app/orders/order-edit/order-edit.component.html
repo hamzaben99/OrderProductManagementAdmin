@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>
-  {{ isEditMode ? "Editing Order No. " + order.id : "Adding a new order" }}
+  {{ order ? "Editing Order No. " + order.id : "Adding a new order" }}
 </h1>
 <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
   <div mat-dialog-content class="dialog-content-container">
@@ -171,7 +171,7 @@
                 <mat-label> Product </mat-label>
                 <mat-select formControlName="productId">
                   <mat-option [value]="orderProductCtrl.value.productId">{{
-                    getOrderProduct(orderProductCtrl.value.productId).name
+                    getOrderProduct(orderProductCtrl.value.productId)? getOrderProduct(orderProductCtrl.value.productId).name: 'Unknown'
                   }}</mat-option>
                 </mat-select>
               </mat-form-field>
@@ -213,7 +213,7 @@
     </button>
     <!-- not sure if i want to add this button yet -->
     <button
-      *ngIf="isEditMode && false"
+      *ngIf="order && false"
       mat-icon-button
       matTooltip="Delete"
       color="warn"

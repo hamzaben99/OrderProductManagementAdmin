@@ -17,25 +17,11 @@ export class OrderDetailsComponent implements OnInit {
     private orderService: OrderService,
     private snackBar: MatSnackBar,
     private dialogRef: MatDialogRef<OrderDetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: { id: number }
+    @Inject(MAT_DIALOG_DATA) private data: { order: Order }
   ) {}
 
   ngOnInit(): void {
-    this.orderService.fetchOrderById(this.data.id).subscribe({
-      next: (order) =>
-        (this.order = this.orderService.getOrderWithProducts(order)),
-      error: (err) => {
-        this.snackBar.open(
-          `Failed to fetch order No. ${this.data.id}: ${err.message}`,
-          'dismiss',
-          {
-            duration: SNACK_BAR_DURATION,
-            panelClass: 'fail',
-          }
-        );
-        this.dialogRef.close();
-      },
-    });
+    this.order = this.data.order;
   }
 
   onEditOrder() {

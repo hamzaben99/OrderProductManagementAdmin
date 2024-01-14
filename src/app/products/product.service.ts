@@ -1,27 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '../shared/http.service';
 import { Product } from '../models/product.model';
-import { Subject, tap } from 'rxjs';
+import { Subject, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProductsService {
-  private _products: Product[] = DUMMY_PRODUCTS;//[];
-  productsChanged = new Subject<Product[]>();
+export class ProductService {
+  productsChanged = new Subject<void>();
   private url = 'api/products';
 
   constructor(private httpService: HttpService) {}
 
-  get products() {
-    return this._products.slice();
-  }
-
   fetchProducts() {
-    this.httpService.getData<Product[]>(this.url).subscribe((products) => {
-      this._products = products;
-      this.productsChanged.next(this.products);
-    });
+    return of(DUMMY_PRODUCTS);
+    return this.httpService.getData<Product[]>(this.url);
   }
 
   fetchProductById(id: number) {
@@ -29,27 +22,27 @@ export class ProductsService {
   }
 
   addProduct(product: Product) {
-    this.httpService
+    return this.httpService
       .postData<Product>(this.url, product)
-      .subscribe(() => this.fetchProducts());
+      .pipe(tap(() => this.productsChanged.next()));
   }
 
   updateProduct(id: number, product: Product) {
     return this.httpService
       .putData<Product>(`${this.url}/${id}`, product)
-      .subscribe(() => this.fetchProducts());
+      .pipe(tap(() => this.productsChanged.next()));
   }
 
   deleteProduct(id: number) {
     return this.httpService
       .deleteData(`${this.url}/${id}`)
-      .subscribe(() => this.fetchProducts());
+      .pipe(tap(() => this.productsChanged.next()));
   }
 
   deleteProducts(ids: number[]) {
     return this.httpService
       .deleteData(`${this.url}/${ids}`)
-      .subscribe(() => this.fetchProducts());
+      .pipe(tap(() => this.productsChanged.next()));
   }
 }
 

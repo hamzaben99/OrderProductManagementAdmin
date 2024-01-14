@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Order } from '../models/order.model';
 import { Subject, of, tap } from 'rxjs';
 import { HttpService } from '../shared/http.service';
-import { ProductsService } from '../products/products.service';
+import { Product } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,6 @@ export class OrderService {
 
   constructor(
     private httpService: HttpService,
-    private productService: ProductsService
   ) {}
 
   fetchOrders() {
@@ -69,11 +68,11 @@ export class OrderService {
     // this.ordersChanged.next()
   }
 
-  getOrderWithProducts(order: Order) {
+  getOrderWithProducts(order: Order, products: Product[]) {
     order.products = order.products.map((p) => ({
       productId: p.productId,
       quantity: p.quantity,
-      product: this.productService.products.find((pr) => pr.id === p.productId),
+      product: products.find((pr) => pr.id === p.productId),
     }));
     return order;
   }

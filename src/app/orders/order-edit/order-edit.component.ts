@@ -97,8 +97,8 @@ export class OrderEditComponent implements OnInit, OnDestroy {
         this.snackBar.open(`Order has been saved successfully`, 'dismiss', {
           duration: SNACK_BAR_DURATION,
           panelClass: 'successful',
-        }),
-          this.dialogRef.close();
+        })
+        this.dialogRef.close();
       },
       error: (err) =>
         this.snackBar.open(`Failed to save order: ${err.message}`, 'dismiss', {
@@ -133,8 +133,8 @@ export class OrderEditComponent implements OnInit, OnDestroy {
               duration: SNACK_BAR_DURATION,
               panelClass: 'successful',
             }
-          ),
-            this.dialogRef.close();
+          )
+          this.dialogRef.close();
         },
         error: (err) =>
           this.snackBar.open(

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Order } from '../models/order.model';
-import { Subject, of, tap } from 'rxjs';
+import { Subject, delay, of, tap } from 'rxjs';
 import { HttpService } from '../shared/http.service';
 import { Product } from '../models/product.model';
 
@@ -16,12 +16,12 @@ export class OrderService {
   ) {}
 
   fetchOrders() {
-    return of(DUMMY_ORDERS); //todo: to be removed
+    return of(DUMMY_ORDERS).pipe(delay(200)); //todo: to be removed
     return this.httpService.getData<Order[]>(this.url);
   }
 
   fetchOrderById(id: number) {
-    return of(DUMMY_ORDERS.find((order) => order.id === id)); // todo: to be removed
+    return of(DUMMY_ORDERS.find((order) => order.id === id)).pipe(delay(200)); // todo: to be removed
     return this.httpService.getData<Order>(`${this.url}/${id}`);
   }
 

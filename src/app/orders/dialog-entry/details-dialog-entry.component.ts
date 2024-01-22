@@ -17,8 +17,6 @@ import { Order } from '../../models/order.model';
   template: '',
 })
 export class DetailsDialogEntryComponent implements OnInit {
-  private currOrder: Order;
-
   constructor(
     private snackBar: MatSnackBar,
     private orderService: OrderService,
@@ -34,32 +32,28 @@ export class DetailsDialogEntryComponent implements OnInit {
   }
 
   private openDialog() {
-    this.fetchOrder();
-
-    const dialogRef = this.dialog.open(OrderDetailsComponent, {
-      data: { order: this.currOrder },
-      /* write config here */
-    });
-
-    dialogRef.afterClosed().subscribe((result: OrderDetailsResult) => {
-      if (result)
-        this.router.navigate(result.navigate, { relativeTo: this.route });
-      else this.router.navigate(['../'], { relativeTo: this.route });
-    });
-  }
-
-  private fetchOrder() {
     forkJoin({
       order: this.orderService.fetchOrderById(
         +this.route.snapshot.params['id']
       ),
       products: this.productService.fetchProducts(),
     }).subscribe({
-      next: (value) =>
-        (this.currOrder = this.orderService.getOrderWithProducts(
+      next: (value) => {
+        const currOrder = this.orderService.getOrderWithProducts(
           value.order,
           value.products
-        )),
+        );
+        const dialogRef = this.dialog.open(OrderDetailsComponent, {
+          data: { order: currOrder },
+          /* write config here */
+        });
+
+        dialogRef.afterClosed().subscribe((result: OrderDetailsResult) => {
+          if (result)
+            this.router.navigate(result.navigate, { relativeTo: this.route });
+          else this.router.navigate(['../'], { relativeTo: this.route });
+        });
+      },
       error: (err) => {
         this.snackBar.open(`Failed to load order: ${err.message}`, 'dismiss', {
           duration: SNACK_BAR_DURATION,

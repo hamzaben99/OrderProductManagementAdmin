@@ -17,7 +17,7 @@
 
 .toolbar-image {
   max-height: 100%;
-  padding: 1em;
+  /* padding: 1em; */
 }
 
 .image-container {
@@ -34,8 +34,8 @@
 
 .sidenav-content {
   /* display: flex; */
-  padding: 2em;
-  height: calc(100% - var(--mat-toolbar-standard-height));
+  padding: 2em 0;
+  /* height: calc(100% - var(--mat-toolbar-standard-height)); */
   /* max-width: 100%; */
 }
 
@@ -43,16 +43,16 @@
   display: none;
 } */
 
-@media(max-width: 767px) {
+/* @media(max-width: 767px) {
   .sidenav-content {
-    padding: 2em;
+    padding: 2em 0;
     height: calc(100% - var(--mat-toolbar-mobile-height));
   }
 
   /* .menu-button {
     display: block;
-  } */
-}
+  } //
+} */
 
 .sidenav {
   user-select: none;

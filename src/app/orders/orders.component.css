@@ -8,14 +8,17 @@ table {
 
 .action-buttons {
   display: flex;
+  align-items: center;
   gap: 20px;
+  float: right;
 }
 
 .actions {
-  display: flex;
-  justify-content: space-between;
+  /* display: flex;
+  justify-content: space-between; */
+  /* align-items: center; */
+  margin-top: 1em;
   align-items: center;
-  margin: 1em 0em;
 }
 
 .action-selection {

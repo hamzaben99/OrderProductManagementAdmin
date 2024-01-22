@@ -1,235 +1,305 @@
 <h1 mat-dialog-title>
   {{ order ? "Editing Order No. " + order.id : "Adding a new order" }}
 </h1>
-<form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
-  <div mat-dialog-content class="dialog-content-container">
-    <div class="dialog-content-item">
-      <mat-card appearance="outlined" class="dialog-item-card first-card">
-        <mat-card-header>
-          <mat-card-title> Customer Infos </mat-card-title>
-        </mat-card-header>
-        <mat-card-content formGroupName="client">
-          <div class="row">
-            <mat-form-field appearance="outline">
-              <mat-label>Last name</mat-label>
-              <input
-                matInput
-                placeholder="Ex. Alaoui"
-                formControlName="lastName"
-              />
-              <mat-error *ngIf="!orderForm.get('client.lastName').valid"
-                >This field is required</mat-error
-              >
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>First name</mat-label>
-              <input
-                matInput
-                placeholder="Ex. Youssef"
-                formControlName="firstName"
-              />
-              <mat-error *ngIf="!orderForm.get('client.firstName').valid"
-                >This field is required</mat-error
-              >
-            </mat-form-field>
+<div class="row" style="margin: 0">
+  <div class="col-md-12">
+    <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+      <div mat-dialog-content class="dialog-content-container">
+        <div class="row">
+          <div class="col-md-6">
+            <mat-card appearance="outlined" class="dialog-item-card"
+              ><!--first-card"-->
+              <mat-card-header>
+                <mat-card-title> Customer Infos </mat-card-title>
+              </mat-card-header>
+              <mat-card-content formGroupName="client">
+                <div class="row">
+                  <div class="col-md-6">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Last name</mat-label>
+                      <input
+                        matInput
+                        placeholder="Ex. Alaoui"
+                        formControlName="lastName"
+                      />
+                      <mat-error *ngIf="!orderForm.get('client.lastName').valid"
+                        >This field is required</mat-error
+                      >
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field appearance="outline">
+                      <mat-label>First name</mat-label>
+                      <input
+                        matInput
+                        placeholder="Ex. Youssef"
+                        formControlName="firstName"
+                      />
+                      <mat-error
+                        *ngIf="!orderForm.get('client.firstName').valid"
+                        >This field is required</mat-error
+                      >
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Phone number</mat-label>
+                      <input
+                        matInput
+                        placeholder="Ex. 061234578 or +212612345678"
+                        formControlName="phoneNumber"
+                      />
+                      <mat-icon class="material-symbols-outlined" matSuffix
+                        >phone</mat-icon
+                      >
+                      <mat-error
+                        *ngIf="
+                          orderForm
+                            .get('client.phoneNumber')
+                            .hasError('pattern')
+                        "
+                        >Please enter a valid phone number</mat-error
+                      >
+                      <mat-error
+                        *ngIf="
+                          orderForm
+                            .get('client.phoneNumber')
+                            .hasError('required')
+                        "
+                        >This field is required</mat-error
+                      >
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Email address</mat-label>
+                      <input
+                        matInput
+                        placeholder="Ex. test@gmail.com"
+                        type="email"
+                        formControlName="emailAddress"
+                      />
+                      <mat-icon class="material-symbols-outlined" matSuffix
+                        >email</mat-icon
+                      >
+                      <mat-error
+                        *ngIf="!orderForm.get('client.emailAddress').valid"
+                        >Please enter a valid email</mat-error
+                      >
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-card-content>
+              <mat-card-header style="border-top: 1px solid lightgray">
+                <mat-card-title> Delivery Infos </mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="row" style="align-items: center">
+                  <div class="col-md-6">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Delivery Date</mat-label>
+                      <input
+                        matInput
+                        [min]="minDate"
+                        [matDatepicker]="deliveryPicker"
+                        formControlName="orderDeliveryDate"
+                      />
+                      <mat-hint>MM/DD/YYY</mat-hint>
+                      <mat-datepicker-toggle
+                        matIconSuffix
+                        [for]="deliveryPicker"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker #deliveryPicker></mat-datepicker>
+                      <mat-error
+                        *ngIf="!orderForm.get('orderDeliveryDate').valid"
+                        >This field is required</mat-error
+                      >
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-slide-toggle
+                      labelPosition="before"
+                      color="primary"
+                      [checked]="isPreorder"
+                      (change)="onPreorderSlideToggleChange($event)"
+                      >Pre-order</mat-slide-toggle
+                    >
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Delivery Address</mat-label>
+                      <textarea
+                        matInput
+                        placeholder="Ave Mohammed VI, Tangier, Morocco"
+                        rows="2"
+                        formControlName="orderDeliveryAddress"
+                      ></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+            <!-- </div> -->
           </div>
-          <div class="row">
-            <mat-form-field appearance="outline">
-              <mat-label>Phone number</mat-label>
-              <input
-                matInput
-                placeholder="Ex. 061234578 or +212612345678"
-                formControlName="phoneNumber"
-              />
-              <mat-icon class="material-symbols-outlined" matSuffix
-                >phone</mat-icon
-              >
-              <mat-error
-                *ngIf="orderForm.get('client.phoneNumber').hasError('pattern')"
-                >Please enter a valid phone number</mat-error
-              >
-              <mat-error
-                *ngIf="orderForm.get('client.phoneNumber').hasError('required')"
-                >This field is required</mat-error
-              >
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>Email address</mat-label>
-              <input
-                matInput
-                placeholder="Ex. test@gmail.com"
-                type="email"
-                formControlName="emailAddress"
-              />
-              <mat-icon class="material-symbols-outlined" matSuffix
-                >email</mat-icon
-              >
-              <mat-error *ngIf="!orderForm.get('client.emailAddress').valid"
-                >Please enter a valid email</mat-error
-              >
-            </mat-form-field>
+          <div class="col-md-6">
+            <mat-card appearance="outlined" class="dialog-item-card">
+              <mat-card-header>
+                <mat-card-title> Products Infos </mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="form-array-add">
+                  <div class="row">
+                    <div class="col-sm-7">
+                      <mat-form-field appearance="outline" class="product-item">
+                        <mat-label> Product </mat-label>
+                        <mat-select [(value)]="currOrderProduct.productId">
+                          <mat-option
+                            *ngFor="let product of products"
+                            [value]="product.id"
+                            >{{ product.name }}
+                            {{
+                              isPreorder
+                                ? ""
+                                : "(" + product.stockQuantity + " in stock)"
+                            }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                      <mat-form-field
+                        appearance="outline"
+                        class="quantity-item"
+                      >
+                        <mat-label> Quantity </mat-label>
+                        <input
+                          matInput
+                          type="number"
+                          [(ngModel)]="currOrderProduct.quantity"
+                          min="1"
+                          [ngModelOptions]="{ standalone: true }"
+                        />
+                      </mat-form-field>
+                    </div>
+                    <div class="col-3 col-sm-2">
+                      <button
+                        class="action-item"
+                        mat-icon-button
+                        matTooltip="Add"
+                        color="primary"
+                        type="button"
+                        [disabled]="!currOrderProduct.productId"
+                        (click)="onAddOrderProduct()"
+                      >
+                        <mat-icon class="material-symbols-outlined"
+                          >add_circle</mat-icon
+                        >
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-array-list" formArrayName="products">
+                  <div
+                    class="row"
+                    *ngFor="
+                      let orderProductCtrl of orderProductsControls;
+                      let i = index
+                    "
+                    [formGroupName]="i"
+                  >
+                    <div class="col-sm-7">
+                      <mat-form-field appearance="outline" class="product-item">
+                        <mat-label> Product </mat-label>
+                        <mat-select formControlName="productId">
+                          <mat-option
+                            [value]="orderProductCtrl.value.productId"
+                            >{{
+                              getOrderProduct(orderProductCtrl.value.productId)
+                                ? getOrderProduct(
+                                    orderProductCtrl.value.productId
+                                  ).name
+                                : "Unknown"
+                            }}</mat-option
+                          >
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-6 col-sm-3">
+                      <mat-form-field
+                        appearance="outline"
+                        class="quantity-item"
+                      >
+                        <mat-label> Quantity </mat-label>
+                        <input
+                          matInput
+                          min="1"
+                          type="number"
+                          formControlName="quantity"
+                        />
+                      </mat-form-field>
+                    </div>
+                    <div class="col-3 col-sm-2">
+                      <button
+                        class="action-item"
+                        mat-icon-button
+                        matTooltip="Delete"
+                        color="warn"
+                        type="button"
+                        (click)="onOrderProductDeleted(i)"
+                      >
+                        <mat-icon class="material-symbols-outlined"
+                          >delete</mat-icon
+                        >
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+            <!-- </div> -->
           </div>
-        </mat-card-content>
-        <mat-card-header style="border-top: 1px solid lightgray">
-          <mat-card-title> Delivery Infos </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="row" style="align-items: center">
-            <mat-form-field appearance="outline" style="width: 50%">
-              <mat-label>Delivery Date</mat-label>
-              <input
-                matInput
-                [min]="minDate"
-                [matDatepicker]="deliveryPicker"
-                formControlName="orderDeliveryDate"
-              />
-              <mat-hint>MM/DD/YYY</mat-hint>
-              <mat-datepicker-toggle
-                style="width: 50%"
-                matIconSuffix
-                [for]="deliveryPicker"
-              ></mat-datepicker-toggle>
-              <mat-datepicker #deliveryPicker></mat-datepicker>
-              <mat-error *ngIf="!orderForm.get('orderDeliveryDate').valid"
-                >This field is required</mat-error
-              >
-            </mat-form-field>
-            <mat-slide-toggle
-              labelPosition="before"
-              color="primary"
-              [checked]="isPreorder"
-              (change)="onPreorderSlideToggleChange($event)"
-              >Pre-order</mat-slide-toggle
-            >
-          </div>
-          <div class="row">
-            <mat-form-field appearance="outline">
-              <mat-label>Delivery Address</mat-label>
-              <textarea
-                matInput
-                placeholder="Ave Mohammed VI, Tangier, Morocco"
-                rows="2"
-                formControlName="orderDeliveryAddress"
-              ></textarea>
-            </mat-form-field>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-    <div class="dialog-content-item">
-      <mat-card appearance="outlined" class="dialog-item-card">
-        <mat-card-header>
-          <mat-card-title> Products Infos </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="form-array-add">
-            <mat-form-field appearance="outline" class="product-item">
-              <mat-label> Product </mat-label>
-              <mat-select [(value)]="currOrderProduct.productId">
-                <mat-option
-                  *ngFor="let product of products"
-                  [value]="product.id"
-                  >{{ product.name }}
-                  {{
-                    isPreorder ? "" : "(" + product.stockQuantity + " in stock)"
-                  }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="quantity-item">
-              <mat-label> Quantity </mat-label>
-              <input
-                matInput
-                type="number"
-                [(ngModel)]="currOrderProduct.quantity"
-                min="1"
-                [ngModelOptions]="{ standalone: true }"
-              />
-            </mat-form-field>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="row">
+        <div class="col-md-12">
+          <div mat-dialog-actions class="action-buttons-container">
             <button
-              class="action-item"
               mat-icon-button
-              matTooltip="Add"
+              matTooltip="Save"
               color="primary"
-              type="button"
-              [disabled]="!currOrderProduct.productId"
-              (click)="onAddOrderProduct()"
+              type="submit"
+              [disabled]="!orderForm.valid"
             >
-              <mat-icon class="material-symbols-outlined">add_circle</mat-icon>
+              <mat-icon class="material-symbols-outlined">save</mat-icon>
+            </button>
+            <!-- not sure if i want to add this button yet -->
+            <button
+              *ngIf="order && false"
+              mat-icon-button
+              matTooltip="Delete"
+              color="warn"
+              type="button"
+              (click)="onDeleteOrder()"
+            >
+              <mat-icon class="material-symbols-outlined">delete</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              matTooltip="Close"
+              color="warn"
+              type="button"
+              (click)="onCloseClicked()"
+            >
+              <mat-icon class="material-symbols-outlined">close</mat-icon>
             </button>
           </div>
-          <div class="form-array-list" formArrayName="products">
-            <div
-              class="form-array-item"
-              *ngFor="
-                let orderProductCtrl of orderProductsControls;
-                let i = index
-              "
-              [formGroupName]="i"
-            >
-              <mat-form-field appearance="outline" class="product-item">
-                <mat-label> Product </mat-label>
-                <mat-select formControlName="productId">
-                  <mat-option [value]="orderProductCtrl.value.productId">{{
-                    getOrderProduct(orderProductCtrl.value.productId)? getOrderProduct(orderProductCtrl.value.productId).name: 'Unknown'
-                  }}</mat-option>
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field appearance="outline" class="quantity-item">
-                <mat-label> Quantity </mat-label>
-                <input
-                  matInput
-                  min="1"
-                  type="number"
-                  formControlName="quantity"
-                />
-              </mat-form-field>
-              <button
-                class="action-item"
-                mat-icon-button
-                matTooltip="Delete"
-                color="warn"
-                type="button"
-                (click)="onOrderProductDeleted(i)"
-              >
-                <mat-icon class="material-symbols-outlined">delete</mat-icon>
-              </button>
-            </div>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
+        </div>
+      </div>
+    </form>
   </div>
-  <mat-divider></mat-divider>
-  <div mat-dialog-actions class="action-buttons-container">
-    <button
-      mat-icon-button
-      matTooltip="Save"
-      color="primary"
-      type="submit"
-      [disabled]="!orderForm.valid"
-    >
-      <mat-icon class="material-symbols-outlined">save</mat-icon>
-    </button>
-    <!-- not sure if i want to add this button yet -->
-    <button
-      *ngIf="order && false"
-      mat-icon-button
-      matTooltip="Delete"
-      color="warn"
-      type="button"
-      (click)="onDeleteOrder()"
-    >
-      <mat-icon class="material-symbols-outlined">delete</mat-icon>
-    </button>
-    <button
-      mat-icon-button
-      matTooltip="Close"
-      color="warn"
-      type="button"
-      (click)="onCloseClicked()"
-    >
-      <mat-icon class="material-symbols-outlined">close</mat-icon>
-    </button>
-  </div>
-</form>
+</div>

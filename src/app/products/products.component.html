@@ -1,22 +1,39 @@
 <h1>Products</h1>
-<div class="content">
-  <p>
-    Here is displayed all the Products, you can add new ones, you can delete
-    them, edit them.
-  </p>
+<div class="container">
+  <div class="row">
+    <p>
+      Here is displayed all the Products, you can add new ones, you can delete
+      them, edit them.
+    </p>
+  </div>
   <mat-divider></mat-divider>
-  <div class="products-container">
-    <div class="products-list">
-        <mat-nav-list>
-            <mat-list-item *ngFor="let product of products" class="products-item">
-                <img matListItemAvatar src="product.imgPath" alt="{{product.name}}">
-                <span matListItemTitle>{{ product.name }}</span>
-                <span matListItemLine>{{ product.description }}</span>
-            </mat-list-item>
-        </mat-nav-list>
+  <div class="row">
+    <div class="col-md-12">
+      <button mat-raised-button matTooltip="Add" color="accent" (click)="onAddProduct()">Add Product</button>
     </div>
-    <div class="products-details-container">
-        <router-outlet></router-outlet>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="row">
+    <div class="col-md-5">
+      <mat-nav-list>
+        <mat-list-item
+          *ngFor="let product of products"
+          [routerLink]="[product.id]"
+          routerLinkActive="activated"
+          class="products-item"
+        >
+          <img
+            matListItemAvatar
+            [src]="product.imgPath"
+            [alt]="product.name"
+          />
+          <span matListItemTitle>{{ product.name }}</span>
+          <span matListItemLine>{{ product.description }}</span>
+        </mat-list-item>
+      </mat-nav-list>
+    </div>
+    <div class="col-md-7">
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>

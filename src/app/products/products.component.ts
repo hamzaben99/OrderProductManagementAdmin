@@ -4,6 +4,7 @@ import { ProductService } from './product.service';
 import { Subject, takeUntil } from 'rxjs';
 import { SNACK_BAR_DURATION } from '../shared/constants';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-products',
@@ -16,6 +17,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
   products: Product[] = [];
 
   constructor(
+    private router: Router,
+    private route: ActivatedRoute,
     private productService: ProductService,
     private snackBar: MatSnackBar
   ) {}
@@ -50,5 +53,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
         );
       },
     });
+  }
+
+  onAddProduct() {
+    this.router.navigate(['new'], { relativeTo: this.route });
   }
 }

@@ -18,9 +18,6 @@ import { Product } from '../../models/product.model';
   template: '',
 })
 export class EditDialogEntryComponent {
-  private order: Order;
-  private products: Product[];
-
   constructor(
     private snackBar: MatSnackBar,
     private orderService: OrderService,
@@ -37,25 +34,7 @@ export class EditDialogEntryComponent {
 
   private openDialog() {
     const isEditMode = this.route.snapshot.params['id'] != null;
-    this.fetchOrderAndProducts(isEditMode);
 
-    const dialogRef = this.dialog.open(OrderEditComponent, {
-      disableClose: true,
-      data: {
-        order: this.order,
-        products: this.products,
-      },
-      /* write config here */
-    });
-
-    dialogRef.afterClosed().subscribe((result: OrderEditResult) => {
-      if (result)
-        this.router.navigate(result.navigate, { relativeTo: this.route });
-      else this.router.navigate(['/orders']);
-    });
-  }
-
-  private fetchOrderAndProducts(isEditMode: boolean) {
     forkJoin({
       order: isEditMode
         ? this.orderService.fetchOrderById(+this.route.snapshot.params['id'])
@@ -63,8 +42,23 @@ export class EditDialogEntryComponent {
       products: this.productService.fetchProducts(),
     }).subscribe({
       next: (value) => {
-        this.order = value.order;
-        this.products = value.products;
+        const order = value.order;
+        const products = value.products;
+
+        const dialogRef = this.dialog.open(OrderEditComponent, {
+          disableClose: true,
+          data: {
+            order: order,
+            products: products,
+          },
+          /* write config here */
+        });
+    
+        dialogRef.afterClosed().subscribe((result: OrderEditResult) => {
+          if (result)
+            this.router.navigate(result.navigate, { relativeTo: this.route });
+          else this.router.navigate(['/orders']);
+        });
       },
       error: (err) => {
         this.snackBar.open(`Failed to load order: ${err.message}`, 'dismiss', {

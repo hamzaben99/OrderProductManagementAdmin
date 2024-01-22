@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '../shared/http.service';
 import { Product } from '../models/product.model';
-import { Subject, of, tap } from 'rxjs';
+import { Subject, delay, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,11 +13,12 @@ export class ProductService {
   constructor(private httpService: HttpService) {}
 
   fetchProducts() {
-    return of(DUMMY_PRODUCTS);
+    return of(DUMMY_PRODUCTS).pipe(delay(200));
     return this.httpService.getData<Product[]>(this.url);
   }
 
   fetchProductById(id: number) {
+    return of(DUMMY_PRODUCTS.find(product => product.id === id)).pipe(delay(200));
     return this.httpService.getData<Product>(`${this.url}/${id}`);
   }
 

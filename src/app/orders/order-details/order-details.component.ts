@@ -67,8 +67,8 @@ export class OrderDetailsComponent implements OnInit {
               duration: SNACK_BAR_DURATION,
               panelClass: 'successful',
             }
-          ),
-            this.dialogRef.close();
+          );
+          this.dialogRef.close();
         },
         error: (err) =>
           this.snackBar.open(

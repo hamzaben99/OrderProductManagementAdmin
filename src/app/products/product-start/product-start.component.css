@@ -1,0 +1,19 @@
+.card-container {
+  min-height: 85vh;
+}
+
+.card-content {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+  font-size: xx-large;
+  font-weight: 400;
+}
+
+.header-actions {
+  position: absolute;
+  right: 15px;
+  display: flex;
+  gap: 10px;
+}

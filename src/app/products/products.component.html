@@ -3,34 +3,46 @@
   <div class="row">
     <p>
       Here is displayed all the Products, you can add new ones, you can delete
-      them, edit them.
+      them or edit them.
     </p>
   </div>
   <mat-divider></mat-divider>
-  <div class="row">
-    <div class="col-md-12">
-      <button mat-raised-button matTooltip="Add" color="accent" (click)="onAddProduct()">Add Product</button>
-    </div>
-  </div>
-  <mat-divider></mat-divider>
+  <br />
   <div class="row">
     <div class="col-md-5">
-      <mat-nav-list>
-        <mat-list-item
-          *ngFor="let product of products"
-          [routerLink]="[product.id]"
-          routerLinkActive="activated"
-          class="products-item"
-        >
-          <img
-            matListItemAvatar
-            [src]="product.imgPath"
-            [alt]="product.name"
-          />
-          <span matListItemTitle>{{ product.name }}</span>
-          <span matListItemLine>{{ product.description }}</span>
-        </mat-list-item>
-      </mat-nav-list>
+      <mat-card appearance="outlined" class="card-container">
+        <mat-card-header class="card-header">
+          <mat-card-title>
+            List of Products
+          </mat-card-title>
+          <button
+              mat-mini-fab
+              matTooltip="Add"
+              color="accent"
+              (click)="onAddProduct()"
+            >
+              <mat-icon class="material-symbols-outlined">add</mat-icon>
+            </button>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-nav-list class="products-list">
+            <mat-list-item
+              *ngFor="let product of products"
+              [routerLink]="[product.id]"
+              routerLinkActive="active"
+              class="products-item"
+            >
+              <img
+                matListItemAvatar
+                [src]="product.imgPath"
+                [alt]="product.name"
+              />
+              <span matListItemTitle>{{ product.name }}</span>
+              <span matListItemLine>{{ product.description }}</span>
+            </mat-list-item>
+          </mat-nav-list>
+        </mat-card-content>
+      </mat-card>
     </div>
     <div class="col-md-7">
       <router-outlet></router-outlet>

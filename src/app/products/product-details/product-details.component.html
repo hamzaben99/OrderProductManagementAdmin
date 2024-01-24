@@ -1,1 +1,43 @@
-<p>product-details {{ product.id }} works!</p>
+<mat-card appearance="outlined" class="card-container">
+  <mat-card-header class="card-header">
+    <img mat-card-avatar class="img-responsive" [src]="product.imgPath" />
+    <mat-card-title>
+      {{ product.name }}
+    </mat-card-title>
+    <mat-card-subtitle> Product No. {{ product.id }} </mat-card-subtitle>
+    <div class="header-actions">
+      <button mat-mini-fab color="primary" matTooltip="Edit" (click)="onEditProduct()">
+        <mat-icon class="material-symbols-outlined">edit</mat-icon>
+      </button>
+      <button mat-mini-fab color="warn" matTooltip="Delete" (click)="onDeleteProduct()">
+        <mat-icon class="material-symbols-outlined">delete</mat-icon>
+      </button>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="row">
+      <div class="col-md-6">
+        {{product.unitPrice}}
+      </div>
+      <div class="col-md-6">
+        {{product.stockQuantity}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {{product.description}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <img
+        mat-card-image
+        class="img-responsive"
+        [src]="product.imgPath"
+        alt="Image of {{ product.name }}"
+        style="max-width: 100%;"
+      />
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

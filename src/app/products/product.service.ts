@@ -50,38 +50,66 @@ export class ProductService {
 const DUMMY_PRODUCTS: Product[] = [
   {
     id: 1,
-    name: 'burger',
+    name: 'Burger',
     unitPrice: 5,
-    stockQuantity: 15
+    stockQuantity: 15,
+    imgPath: 'https://www.biofournil.com/wp-content/uploads/2021/02/BRIOCHE-BIOFOURNIL_web.jpg',
+    description: 'It\'s a burguiir'
   },
   {
     id: 2,
-    name: 'pizza',
+    name: 'Pizza',
     unitPrice: 4,
-    stockQuantity: 10
+    stockQuantity: 10,
+    imgPath: 'https://fr.ooni.com/cdn/shop/articles/Margherita-9920.jpg?crop=center&height=800&v=1644590066&width=800',
+    description: 'pazzapiz'
   },
   {
     id: 3,
-    name: 'chocolate',
+    name: 'Chocolate',
     unitPrice: 2.5,
-    stockQuantity: 50
+    stockQuantity: 50,
+    imgPath: 'https://upload.wikimedia.org/wikipedia/commons/c/cd/Green_and_Black%27s_dark_chocolate_bar_2.jpg',
+    description: 'chocolatinato batatinato'
   },
   {
     id: 4,
-    name: 'tea',
+    name: 'Tea',
     unitPrice: 3,
-    stockQuantity: 10
+    stockQuantity: 10,
+    imgPath: 'https://www.foodandwine.com/thmb/6wTm7a0y87X97LK-ZMxe2787kI8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/different-types-of-tea-FT-BLOG0621-7c7fd231e66d4fea8ca9a47cad52ba79.jpg',
+    description: 'chaaay bina3a3'
   },
   {
     id: 5,
-    name: 'cookie',
+    name: 'Cookie',
     unitPrice: 2,
-    stockQuantity: 45
+    stockQuantity: 45,
+    imgPath: 'https://sallysbakingaddiction.com/wp-content/uploads/2013/02/peanut-butter-chocolate-swirl-cookies-2.jpg',
+    description: 'coooockizat'
   },
   {
     id: 6,
-    name: 'muffin',
+    name: 'Muffin',
     unitPrice: 4.5,
-    stockQuantity: 35
+    stockQuantity: 35,
+    imgPath: 'https://www.rainbownourishments.com/wp-content/uploads/2023/01/vegan-chocolate-chip-muffins-1..jpg',
+    description: 'muffinnnnn'
+  },
+  {
+    id: 7,
+    name: 'Muffin',
+    unitPrice: 4.5,
+    stockQuantity: 35,
+    imgPath: 'https://www.rainbownourishments.com/wp-content/uploads/2023/01/vegan-chocolate-chip-muffins-1..jpg',
+    description: 'muffinnnnn'
+  },
+  {
+    id: 8,
+    name: 'Muffin',
+    unitPrice: 4.5,
+    stockQuantity: 35,
+    imgPath: 'https://www.rainbownourishments.com/wp-content/uploads/2023/01/vegan-chocolate-chip-muffins-1..jpg',
+    description: 'muffinnnnn'
   }
 ]

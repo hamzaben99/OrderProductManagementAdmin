@@ -12,7 +12,7 @@ import { SNACK_BAR_DURATION } from '../../shared/constants';
   styleUrl: './product-details.component.css',
 })
 export class ProductDetailsComponent implements OnInit {
-  product = new Product('Unknown', 0, 0, 'Unknown', -1, 'Unknown');
+  product = new Product('Unknown', 0, 0, 'Unknown', 'assets/imgs/question-mark.png', -1);
 
   constructor(
     private productService: ProductService,

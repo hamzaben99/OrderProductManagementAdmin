@@ -1,15 +1,36 @@
-.content {
-
-}
-
-.products-container {
-
-}
-
 .products-list {
-
 }
 
-.products-details-container {
+.card-container {
+  overflow-x: auto;
+  max-height: 85vh;
+}
 
+.products-item {
+  border: 1px solid lightgray;
+  border-radius: 20px;
+  margin: 5px;
+  background-color: #fafafa;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: white;
+  border-bottom: 1px solid lightgray;
+}
+
+.active {
+  background-color: #3f51b5;
+  .mat-mdc-list-item-title {
+    color: white;
+    font-size: bold;
+  }
+  .mat-mdc-list-item-line {
+    color: white;
+  }
 }

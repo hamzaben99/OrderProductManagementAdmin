@@ -4,7 +4,7 @@ export class Product {
     public unitPrice: number,
     public stockQuantity: number,
     public description?: string,
-    public id?: number,
-    public imgPath?: string
+    public imgPath?: string,
+    public id?: number
   ) {}
 }

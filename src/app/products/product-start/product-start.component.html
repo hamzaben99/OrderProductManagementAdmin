@@ -1,1 +1,23 @@
-<p>product-start works!</p>
+<mat-card appearance="outlined" class="card-container">
+    <mat-card-header>
+      <img mat-card-avatar class="img-responsive" src="assets/imgs/question-mark.png" alt="Question mark img"/>
+      <mat-card-title>
+        Product's Name
+      </mat-card-title>
+      <mat-card-subtitle>
+        Product No. ?
+      </mat-card-subtitle>
+      <div class="header-actions">
+        <button mat-mini-fab color="primary" matTooltip="Edit" disabled>
+          <mat-icon class="material-symbols-outlined">edit</mat-icon>
+        </button>
+        <button mat-mini-fab color="warn" matTooltip="Delete" disabled>
+          <mat-icon class="material-symbols-outlined">delete</mat-icon>
+        </button>
+      </div>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content class="card-content">
+      Please Select a Product!
+    </mat-card-content>
+  </mat-card>

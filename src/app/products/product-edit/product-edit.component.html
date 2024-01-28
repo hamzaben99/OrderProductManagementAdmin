@@ -1,7 +1,11 @@
 <mat-card appearance="outlined" class="card-container">
   <form [formGroup]="productForm" (ngSubmit)="onSaveProduct()">
     <mat-card-header class="card-header">
-      <img mat-card-avatar class="img-responsive" [src]="product.imgPath" />
+      <img
+        mat-card-avatar
+        class="img-responsive"
+        [src]="product.productImages.paths[0]"
+      />
       <mat-card-title>
         {{ isEditMode ? "Editing " + product.name : "New Product" }}
       </mat-card-title>
@@ -14,7 +18,6 @@
           type="submit"
           color="primary"
           matTooltip="Save"
-          (click)="onSaveProduct()"
           [disabled]="!productForm.valid"
         >
           <mat-icon class="material-symbols-outlined">save</mat-icon>
@@ -39,8 +42,7 @@
             <mat-label>Unit Price</mat-label>
             <input matInput placeholder="Ex. 5" formControlName="unitPrice" />
             <span matSuffix>DH&nbsp;</span>
-            <mat-error
-              *ngIf="productForm.get('unitPrice').hasError('required')"
+            <mat-error *ngIf="productForm.get('unitPrice').hasError('required')"
               >This field is required</mat-error
             >
             <mat-error
@@ -61,8 +63,7 @@
               *ngIf="productForm.get('stockQuantity').hasError('required')"
               >This field is required</mat-error
             >
-            <mat-error
-              *ngIf="productForm.get('stockQuantity').hasError('min')"
+            <mat-error *ngIf="productForm.get('stockQuantity').hasError('min')"
               >Must be greater than or equal 0</mat-error
             >
           </mat-form-field>
@@ -85,7 +86,49 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-12">drag and drop image here</div>
+        <div class="col-md-12">
+          <app-file-upload
+            accept="image/*"
+            (filesSelected)="onProductImagesSelected($event)"
+          ></app-file-upload>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <mat-nav-list class="images-list">
+            <div
+              class="product-image-item"
+              *ngFor="
+                let image of productForm.value.productImages.files;
+                index as index
+              "
+            >
+              <mat-list-item (click)="openImageFilePreview(index)">
+                <img
+                  matListItemAvatar
+                  [src]="imagesUrls[index]"
+                  [alt]="image.name"
+                />
+                <span matListItemTitle>{{ image.name }}</span>
+              </mat-list-item>
+              <button type="button" mat-icon-button color="warn" (click)="openImagePreview(imagesUrls[index])">
+                <mat-icon class="material-symbols-outlined">delete</mat-icon>
+              </button>
+            </div>
+            <div
+              class="product-image-item"
+              *ngFor="let path of productForm.value.productImages.paths"
+            >
+              <mat-list-item (click)="openImagePathPreview(index)">
+                <img matListItemAvatar [src]="path" />
+                <span matListItemTitle>{{ path.split("/").slice(-1) }}</span>
+              </mat-list-item>
+              <button type="button" mat-icon-button color="warn" (click)="openImagePreview(path)">
+                <mat-icon class="material-symbols-outlined">delete</mat-icon>
+              </button>
+            </div>
+          </mat-nav-list>
+        </div>
       </div>
     </mat-card-content>
   </form>

@@ -34,3 +34,15 @@
     width: 100%;
   }
 }
+
+.product-image-item {
+  display: flex;
+  align-items: center;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  margin-top: 3px;
+}
+
+.images-list {
+  
+}

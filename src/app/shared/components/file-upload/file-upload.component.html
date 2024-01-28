@@ -1,0 +1,23 @@
+<div class="container" appDragAndDrop (fileDropped)="onFileDropped($event)">
+  <input
+    type="file"
+    #fileDropRef
+    id="fileDropRef"
+    [accept]="accept"
+    multiple
+    (change)="fileBrowseHandler($event.target.files)"
+  />
+  <button type="button" mat-mini-fab color="primary">
+    <mat-icon class="material-symbols-outlined"> upload </mat-icon>
+  </button>
+  <h3>Drag and drop file here</h3>
+  <h3>or</h3>
+  <button
+    type="button"
+    mat-flat-button
+    color="primary"
+    (click)="fileDropRef.click()"
+  >
+    Browse for file
+  </button>
+</div>

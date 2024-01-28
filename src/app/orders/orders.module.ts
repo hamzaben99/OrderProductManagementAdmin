@@ -11,7 +11,6 @@ import { OrdersTableComponent } from './orders-table/orders-table.component';
 import { OrderEditComponent } from './order-edit/order-edit.component';
 import { EditDialogEntryComponent } from './dialog-entry/edit-dialog-entry.component';
 import { DetailsDialogEntryComponent } from './dialog-entry/details-dialog-entry.component';
-import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -29,7 +28,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    ReactiveFormsModule
   ]
 })
 export class OrdersModule { }

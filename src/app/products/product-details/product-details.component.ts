@@ -5,6 +5,8 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SNACK_BAR_DURATION } from '../../shared/constants';
+import { ImagePreviewDialogComponent } from '../../shared/components/image-preview-dialog/image-preview-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-product-details',
@@ -12,13 +14,14 @@ import { SNACK_BAR_DURATION } from '../../shared/constants';
   styleUrl: './product-details.component.css',
 })
 export class ProductDetailsComponent implements OnInit {
-  product = new Product('Unknown', 0, 0, 'Unknown', 'assets/imgs/question-mark.png', -1);
+  product = new Product('Unknown', 0, 0, 'Unknown', {paths: ['assets/imgs/question-mark.png']}, -1);
 
   constructor(
     private productService: ProductService,
     private router: Router,
     private route: ActivatedRoute,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -61,5 +64,9 @@ export class ProductDetailsComponent implements OnInit {
 
   onEditProduct() {
     this.router.navigate(['edit'], { relativeTo: this.route });
+  }
+
+  openImagePreview(url: string) {
+    this.dialog.open(ImagePreviewDialogComponent, {data: url});
   }
 }

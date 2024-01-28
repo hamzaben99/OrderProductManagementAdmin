@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTableModule } from '@angular/material/table'
 import { MatCheckboxModule } from '@angular/material/checkbox'
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
@@ -16,10 +16,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { DragAndDropDirective } from './directives/drag-and-drop.directive';
+import { ImagePreviewDialogComponent } from './components/image-preview-dialog/image-preview-dialog.component';
 
 @NgModule({
   imports: [
     CommonModule,
+    MatToolbarModule,
     MatListModule,
     MatIconModule,
     MatButtonModule,
@@ -35,9 +40,11 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSlideToggleModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [
+    MatToolbarModule,
     MatListModule,
     MatIconModule,
     MatButtonModule,
@@ -54,7 +61,15 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSlideToggleModule,
     MatDatepickerModule,
     //MatNativeDateModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    FileUploadComponent,
+    ImagePreviewDialogComponent
+  ],
+  declarations: [
+    FileUploadComponent,
+    DragAndDropDirective,
+    ImagePreviewDialogComponent
   ]
 })
 export class SharedModule { }

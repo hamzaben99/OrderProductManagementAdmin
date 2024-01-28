@@ -5,17 +5,19 @@ import { EditDialogEntryComponent } from './dialog-entry/edit-dialog-entry.compo
 import { DetailsDialogEntryComponent } from './dialog-entry/details-dialog-entry.component';
 
 const routes: Routes = [
-  { 
-    path: '', component: OrdersComponent, children: [
+  {
+    path: '',
+    component: OrdersComponent,
+    children: [
       { path: 'new', component: EditDialogEntryComponent },
       { path: ':id/edit', component: EditDialogEntryComponent },
-      { path: ':id', component: DetailsDialogEntryComponent }
-    ]
-  }
+      { path: ':id', component: DetailsDialogEntryComponent },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class OrdersRoutingModule { }
+export class OrdersRoutingModule {}

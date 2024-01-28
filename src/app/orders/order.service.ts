@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Order } from '../models/order.model';
 import { Subject, delay, of, tap } from 'rxjs';
-import { HttpService } from '../shared/http.service';
+import { HttpService } from '../shared/services/http.service';
 import { Product } from '../models/product.model';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +12,7 @@ export class OrderService {
   ordersChanged = new Subject<void>();
   private url = 'api/orders';
 
-  constructor(
-    private httpService: HttpService,
-  ) {}
+  constructor(private httpService: HttpService) {}
 
   fetchOrders() {
     return of(DUMMY_ORDERS).pipe(delay(200)); //todo: to be removed
@@ -27,7 +26,9 @@ export class OrderService {
 
   addOrder(order: Order, isPreorder: boolean) {
     return this.httpService
-      .postData<Order>(this.url, order, { preorder: isPreorder })
+      .postData<Order>(this.url, order, {
+        params: new HttpParams().set('preorder', isPreorder),
+      })
       .pipe(tap(() => this.ordersChanged.next()));
   }
 

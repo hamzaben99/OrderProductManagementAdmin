@@ -2,6 +2,12 @@
   min-height: 85vh;
 }
 
+@media (max-width: 768px) {
+  .card-container {
+    margin-top: 20px;
+  }
+}
+
 .card-content {
   position: absolute;
   top: 50%;

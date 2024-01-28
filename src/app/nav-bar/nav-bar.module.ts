@@ -15,7 +15,6 @@ import { RouterModule } from "@angular/router";
         RouterModule,
         SharedModule,
         MatSidenavModule,
-        MatToolbarModule,
         MatDividerModule
     ],
     exports: [

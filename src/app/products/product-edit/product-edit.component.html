@@ -103,7 +103,7 @@
                 index as index
               "
             >
-              <mat-list-item (click)="openImageFilePreview(index)">
+              <mat-list-item (click)="openImagePreview(imagesUrls[index])">
                 <img
                   matListItemAvatar
                   [src]="imagesUrls[index]"
@@ -111,7 +111,7 @@
                 />
                 <span matListItemTitle>{{ image.name }}</span>
               </mat-list-item>
-              <button type="button" mat-icon-button color="warn" (click)="openImagePreview(imagesUrls[index])">
+              <button type="button" mat-icon-button color="warn" (click)="onProductImageDelete(index)">
                 <mat-icon class="material-symbols-outlined">delete</mat-icon>
               </button>
             </div>
@@ -119,11 +119,11 @@
               class="product-image-item"
               *ngFor="let path of productForm.value.productImages.paths"
             >
-              <mat-list-item (click)="openImagePathPreview(index)">
+              <mat-list-item (click)="openImagePreview(path)">
                 <img matListItemAvatar [src]="path" />
                 <span matListItemTitle>{{ path.split("/").slice(-1) }}</span>
               </mat-list-item>
-              <button type="button" mat-icon-button color="warn" (click)="openImagePreview(path)">
+              <button type="button" mat-icon-button color="warn" (click)="onImagePathDelete(index)">
                 <mat-icon class="material-symbols-outlined">delete</mat-icon>
               </button>
             </div>

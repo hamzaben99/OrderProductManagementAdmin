@@ -5,7 +5,7 @@ export function strictMin(minValue: number): ValidatorFn {
     const inputValue = control.value;
 
     if (inputValue && inputValue <= minValue) {
-      return { minStrict: { minValue } };
+      return { minStrict: minValue };
     }
 
     return null;

@@ -8,6 +8,7 @@ import { strictMin } from '../../shared/validators/strict-min.validator';
 import { SNACK_BAR_DURATION } from '../../shared/constants';
 import { MatDialog } from '@angular/material/dialog';
 import { ImagePreviewDialogComponent } from '../../shared/components/image-preview-dialog/image-preview-dialog.component';
+import { listsNotEmpty } from '../../shared/validators/lists-not-empty.validator';
 
 @Component({
   selector: 'app-product-edit',
@@ -17,13 +18,9 @@ import { ImagePreviewDialogComponent } from '../../shared/components/image-previ
 export class ProductEditComponent {
   private dialogRef;
 
-  product: Product = new Product(
-    '',
-    0,
-    0,
-    '',
-    {paths: ['assets/imgs/question-mark.png']},
-  );
+  product: Product = new Product('', 0, 0, '', {
+    paths: ['assets/imgs/question-mark.png'],
+  });
   imagesUrls: string[] = [];
   productForm: FormGroup;
   isEditMode = false;
@@ -75,7 +72,7 @@ export class ProductEditComponent {
             panelClass: 'fail',
           }
         ),
-    };    
+    };
 
     if (!this.isEditMode)
       this.productService
@@ -106,7 +103,9 @@ export class ProductEditComponent {
   }
 
   openImagePreview(url: string) {
-    this.dialogRef = this.dialog.open(ImagePreviewDialogComponent, {data: url});
+    this.dialogRef = this.dialog.open(ImagePreviewDialogComponent, {
+      data: url,
+    });
   }
 
   private initForm() {
@@ -115,10 +114,13 @@ export class ProductEditComponent {
       unitPrice: ['', [Validators.required, strictMin(0)]],
       stockQuantity: ['', [Validators.required, Validators.min(0)]],
       description: ['', [Validators.required]],
-      productImages: this.formBuilder.group({
-        paths: this.formBuilder.array([]),
-        files: this.formBuilder.array([])
-      })
+      productImages: this.formBuilder.group(
+        {
+          paths: this.formBuilder.array([]),
+          files: this.formBuilder.array([]),
+        },
+        { validators: listsNotEmpty(['paths', 'files']) }
+      ),
       //todo: in server, verify if an image doesn't have a path, in this case delete it, or if a path exists but image doesn't exists don't add it to the data base
     });
   }
